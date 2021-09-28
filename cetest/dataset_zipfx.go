@@ -33,10 +33,11 @@ func newDatasetZipFX(opt DatasetOpt) Dataset {
 	}
 
 	return &datasetZipFX{datasetBase{
-		opt:  opt,
-		args: parseArgs(opt.Args),
-		scq:  newSingleColQuerier(opt.DB, scqTbs, scqCols, scqColTypes, scqMap),
-		mciq: newMulColIndexQuerier(opt.DB, mciqIdxs, mciqTbs, mciqIdxCols, mciqColTypes, mciqMap),
+		opt:   opt,
+		args:  parseArgs(opt.Args),
+		scq:   newSingleColQuerier(opt.DB, scqTbs, scqCols, scqColTypes, scqMap),
+		mciq:  newMulColIndexQuerier(opt.DB, mciqIdxs, mciqTbs, mciqIdxCols, mciqColTypes, mciqMap),
+		predq: newPredicateFromTableQuerier(opt.DB),
 	}}
 }
 

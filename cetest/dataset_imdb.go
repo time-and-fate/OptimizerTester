@@ -31,5 +31,6 @@ func newDatasetIMDB(opt DatasetOpt) Dataset {
 				QTMulColsRangeQueryOnIndex: 0,
 				QTMulColsPointQueryOnIndex: 0,
 			}),
+		predq: newPredicateFromTableQuerier(opt.DB),
 	}}
 }

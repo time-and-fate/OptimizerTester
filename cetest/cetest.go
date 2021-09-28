@@ -54,6 +54,8 @@ const (
 
 	QTMulColsPointQueryOnIndex
 	QTMulColsRangeQueryOnIndex
+
+	QTPredicateFromTable
 )
 
 var (
@@ -65,6 +67,8 @@ var (
 
 		QTMulColsPointQueryOnIndex: "mul-cols-point-query-on-index",
 		QTMulColsRangeQueryOnIndex: "mul-cols-range-query-on-index",
+
+		QTPredicateFromTable: "predicate-from-table",
 	}
 )
 
@@ -168,8 +172,8 @@ func printTop10BadCases(opt Option, collector EstResultCollector) error {
 					return math.Abs(PError(ers[i])) > math.Abs(PError(ers[j]))
 				})
 				for i := 0; i < 10 && i < len(ers); i++ {
-					fmt.Printf("[Worst-%v-%v-%v]: %v, perror=%v\n", opt.Instances[insIdx].Label, opt.Datasets[dsIdx].Label,
-						opt.QueryTypes[qtIdx].String(), ers[i].SQL, PError(ers[i]))
+					fmt.Printf("[Worst-%v-%v-%v]: %v, perror=%v, true: %v, est: %v\n", opt.Instances[insIdx].Label, opt.Datasets[dsIdx].Label,
+						opt.QueryTypes[qtIdx].String(), ers[i].SQL, PError(ers[i]), ers[i].TrueCard, ers[i].EstCard)
 				}
 			}
 		}

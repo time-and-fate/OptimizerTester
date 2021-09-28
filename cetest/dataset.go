@@ -55,8 +55,9 @@ type datasetBase struct {
 	opt  DatasetOpt
 	args datasetArgs
 
-	scq  *singleColQuerier
-	mciq *mulColIndexQuerier
+	scq   *singleColQuerier
+	mciq  *mulColIndexQuerier
+	predq *predicateFromTableQuerier
 }
 
 func (ds *datasetBase) GenEstResults(ins tidb.Instance, nSamples int, qt QueryType) (ers []EstResult, err error) {
@@ -69,6 +70,8 @@ func (ds *datasetBase) GenEstResults(ins tidb.Instance, nSamples int, qt QueryTy
 		ers, err = ds.scq.Collect(nSamples, qt, ers, ins, ds.args.ignoreError)
 	case QTMulColsRangeQueryOnIndex, QTMulColsPointQueryOnIndex:
 		ers, err = ds.mciq.Collect(nSamples, qt, ers, ins, ds.args.ignoreError)
+	case QTPredicateFromTable:
+		ers, err = ds.predq.Collect(qt, ers, ins)
 	default:
 		return nil, errors.Errorf("unsupported query-type=%v", qt)
 	}

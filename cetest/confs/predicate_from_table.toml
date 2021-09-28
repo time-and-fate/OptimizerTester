@@ -1,0 +1,16 @@
+report-dir = "report/"
+# analyze-tables = ["zint", "p_range_zint_a", "p_range_zint_c", "p_hash_zint_a", "p_hash_zint_c"]
+
+query-types = ["predicate-from-table"]
+db = "imdbload"
+
+[[datasets]]
+name = "imdb"
+db = "imdbload"
+label = "imdb"
+
+[[instances]]
+addr = "127.0.0.1"
+port = 4000
+user = "root"
+password = ""
